@@ -10,14 +10,13 @@ Width = Height = 512
 Dimension = 8
 sq_Size = Height // Dimension
 max_FPS = 15
-Images = []
+Images = {}
 
 
 def load_Images():
-    pieces = ['wP', 'wR', 'wN', 'wB', 'wQ', 'wK',
-              'bP', 'bR', 'bN', 'bB', 'bQ', 'bK']
-    for piece in pieces:
-        Images[piece] = p.transform.scale(p.image.load('images/' + piece + '.png'), (sq_Size, sq_Size))
+    pieces = ['wP', 'wR', 'wN', 'wB', 'wQ', 'wK', 'bP', 'bR', 'bN', 'bB', 'bQ', 'bK']
+    for ps in pieces:
+        Images[ps] = p.transform.scale(p.image.load('images/' + ps + '.png'), (sq_Size, sq_Size))
 
 
 def main():
@@ -37,23 +36,27 @@ def main():
         clock.tick(max_FPS)
         p.display.flip()
 
+
 def draw_Gamestate(screen, gs):
     draw_Board(screen)
-    draw_Pieces(screen, ps.board)
+    draw_Pieces(screen, gs.board)
+
 
 def draw_Board(screen):
+    colours = [p.Color('#FFFFFF'), p.Color('#00653f')]
+    for r in range(Dimension):
+        for c in range(Dimension):
+            colour = colours[(r + c) % 2]
+            p.draw.rect(screen, colour, p.Rect(c * sq_Size, r * sq_Size, sq_Size, sq_Size))
 
 
 def draw_Pieces(screen, board):
-    ...
+    for r in range(Dimension):
+        for c in range(Dimension):
+            piece = board[r][c]
+            if piece != '--':
+                screen.blit(Images[piece], p.Rect(c * sq_Size, r * sq_Size, sq_Size, sq_Size))
 
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
