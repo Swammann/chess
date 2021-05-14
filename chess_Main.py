@@ -16,7 +16,7 @@ Images = {}
 def load_Images():
     pieces = ['wP', 'wR', 'wN', 'wB', 'wQ', 'wK', 'bP', 'bR', 'bN', 'bB', 'bQ', 'bK']
     for ps in pieces:
-        Images[ps] = p.transform.scale(p.image.load('images/' + ps + '.png'), (sq_Size, sq_Size))
+        Images[ps] = p.transform.scale(p.image.load('images/' + ps + '.png'), (sq_Size-5, sq_Size-5))
 
 
 def main():
@@ -28,10 +28,24 @@ def main():
     load_Images()
     running = True
 
+    sqSelected = ()
+    plyrClicks = []
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+            elif e.type == p.MOUSEBUTTONDOWN:
+                location = p.mouse.get_pos()
+                col = location[0]//sq_Size
+                row = location[1]//sq_Size
+                if sqSelected == (row, col):
+                    sqSelected = ()
+                    plyrClicks = []
+                else:
+                    sqSelected = (row, col)
+                    plyrClicks.append(sqSelected)
+                if len(plyrClicks) == 2:
+
         draw_Gamestate(screen, gs)
         clock.tick(max_FPS)
         p.display.flip()
