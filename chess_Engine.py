@@ -21,6 +21,14 @@ class gameState():
 
 
 class Move():
+    # maps the keys to values
+    # key : value
+    rankstoRows = {'1': 7, '2': 6, '3': 5, '4': 4,
+                    '5': 3, '6': 2, '7': 1, '8': 0}
+    rowstoRanks = {v: k for k, v in rankstoRows.items()}
+    filestoCols = {'a': 0, 'b': 1, 'c': 2, 'd': 3,
+                   'e': 4, 'f': 5, 'g': 6, 'h': 7}
+    colstoFiles = {v: k for k, v in filestoCol.items()}
 
     def __init__(self, startSq, endSq, board):
         self.startRow = startSq[0]
@@ -29,5 +37,6 @@ class Move():
         self.endCol = endSq[1]
         self.pieceMoved = board.[self.startRow][self.startCol]
         self.pieceCap = board.[self.endRow][self.endCol]
+
 
 

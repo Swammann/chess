@@ -20,16 +20,19 @@ def load_Images():
 
 
 def main():
-    p.init()
+    running = True
     screen = p.display.set_mode((Width, Height))
     clock = p.time.Clock()
-    screen.fill(p.Color('#00653f'))
     gs = chess_Engine.gameState()
-    load_Images()
-    running = True
 
-    sqSelected = ()
-    plyrClicks = []
+    sqSelected = () # If no square is selected, keep track of the last click (tuple:(row, col))
+    plyrClicks = [] # keep track of player clicks (two tuples)
+
+    screen.fill(p.Color('#00653f'))
+    load_Images()
+    p.init()
+
+
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
@@ -45,6 +48,7 @@ def main():
                     sqSelected = (row, col)
                     plyrClicks.append(sqSelected)
                 if len(plyrClicks) == 2:
+
 
         draw_Gamestate(screen, gs)
         clock.tick(max_FPS)
